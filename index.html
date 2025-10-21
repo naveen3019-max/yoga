@@ -26,6 +26,17 @@
       position: relative;
     }
 
+    /* Enhanced smooth scrolling */
+    * {
+      scroll-behavior: smooth;
+    }
+
+    /* Prevent scroll conflicts */
+    .smooth-scroll {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
     /* Ensure smooth scrolling for all sections */
     section {
       position: relative;
@@ -359,6 +370,8 @@
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
+      will-change: transform;
+      transform: translateZ(0);
     }
 
     .testimonial-card::before {
@@ -371,6 +384,8 @@
       background: linear-gradient(90deg, #38b2ac, #2c7a7b, #38b2ac);
       background-size: 200% 100%;
       animation: shimmer 3s ease-in-out infinite;
+      will-change: background-position;
+      transform: translateZ(0);
     }
 
     @keyframes shimmer {
@@ -433,6 +448,9 @@
     .testimonial-section {
       background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 50%, #f0f9ff 100%);
       position: relative;
+      z-index: 10;
+      overflow: visible;
+      will-change: auto;
     }
 
     .testimonial-section::before {
@@ -444,6 +462,8 @@
       bottom: 0;
       background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%2338b2ac" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
       opacity: 0.3;
+      z-index: -1;
+      pointer-events: none;
     }
 
     /* 🌸 Gallery / Nature Harmony Section */
@@ -832,7 +852,7 @@
         <!-- Meditation Image -->
         <div class="relative" data-aos="fade-right">
           <div class="relative group">
-            <img src="https://images.pexels.com/photos/325468/pexels-photo-325468.jpeg" 
+            <img src="hhttps://images.pexels.com/photos/325468/pexels-photo-325468.jpeg" 
                  alt="Peaceful meditation" 
                  class="rounded-3xl shadow-2xl w-full h-[500px] object-cover transform group-hover:scale-105 transition-all duration-700">
             
@@ -1700,6 +1720,39 @@
     AOS.init({ duration: 1000, once: true });
     document.getElementById('menu-toggle').addEventListener('click', () => {
       document.getElementById('menu').classList.toggle('hidden');
+    });
+
+    // Enhanced smooth scrolling
+    document.addEventListener('DOMContentLoaded', function() {
+      // Ensure smooth scrolling for all anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Optimize scroll performance
+      let ticking = false;
+      function updateScroll() {
+        // Add any scroll-based animations here
+        ticking = false;
+      }
+
+      function requestTick() {
+        if (!ticking) {
+          requestAnimationFrame(updateScroll);
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', requestTick);
     });
   </script>
 </body>
