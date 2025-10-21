@@ -3,757 +3,1704 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yoga Studio</title>
+  <title>YogAura | Find Peace in Every Flow</title>
 
-  <!-- Bootstrap 5 (optional for other components) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-/>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
   <style>
-   .hero-bg {
-      background: url('https://cdn.prod.website-files.com/65895731c304c2a9d2daba7b/65c1d9cdccd06e6fc8652cc1_Property%201%3DVariant6%402x.webp') 
-      center center/cover no-repeat;
-      height: 100vh;
+    html, body {
+      height: 100%;
+      margin: 0;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
       position: relative;
     }
 
-    .overlay {
-      background: rgba(0, 0, 0, 0.35);
+    /* Ensure smooth scrolling for all sections */
+    section {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Desktop-specific scrolling fixes */
+    @media (min-width: 769px) {
+      .hero-bg {
+        z-index: -20;
+      }
+      
+      section {
+        z-index: 15;
+      }
+      
+      .hero-section {
+        z-index: 5;
+      }
+    }
+
+    /* 🌅 Hero Section */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 8% 5%;
+      color: white;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* ✅ FIXED: place background below all content, not blocking next sections */
+    .hero-bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -10;
+      background-size: cover;
+      background-position: center;
+      animation: fadeBackground 20s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes fadeBackground {
+      0% { background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80'); }
+      50% { background-image: url('https://images.pexels.com/photos/2762584/pexels-photo-2762584.jpeg'); }
+      100% { background-image: url('https://images.pexels.com/photos/34309597/pexels-photo-34309597.jpeg'); }
+    }
+
+    .hero-overlay {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 1;
     }
 
     .hero-content {
       position: relative;
-      z-index: 1;
+      z-index: 2;
+      max-width: 700px;
     }
 
-    .circle-video {
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
+    .hero-btn {
+      background-color: #38b2ac;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .hero-btn:hover {
+      background-color: #2c7a7b;
+      transform: scale(1.05);
+    }
+
+    /* 🌿 Navbar */
+    nav {
+      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.25);
+      transition: all 0.3s ease-in-out;
+    }
+
+    /* 📱 Responsive Adjustments */
+    @media (max-width: 768px) {
+      .hero-section {
+        text-align: center;
+        align-items: flex-start;
+        padding-top: 100px;
+      }
+
+      .hero-content {
+        max-width: 90%;
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: 2rem !important;
+      }
+
+      .hero-btn {
+        font-size: 1rem;
+        padding: 10px 22px;
+      }
+    }
+
+    img {
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 🎨 Enhanced Card Styling */
+    .service-card {
+      background: linear-gradient(145deg, #ffffff, #f8fafc);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 5px solid white;
     }
 
-    .circle-video video {
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #38b2ac, #2c7a7b);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-card .card-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card .card-image img {
+      transition: transform 0.5s ease;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
     }
 
+    .service-card:hover .card-image img {
+      transform: scale(1.1);
+    }
+
+    /* Mobile responsive adjustments for service cards */
     @media (max-width: 768px) {
-      .hero-bg { height: auto; padding: 4rem 0; }
-      .circle-video { width: 150px; height: 150px; margin-top: 1.5rem; }
+      .service-card .card-image {
+        height: 250px;
+        width: 100%;
+        position: relative;
+      }
+      
+      .service-card .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      
+      .service-card {
+        margin-bottom: 1.5rem;
+        width: 100%;
+      }
+      
+      .service-card .p-6 {
+        padding: 1rem;
+      }
+      
+      .grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-4 {
+        gap: 1.5rem;
+      }
     }
-   nav {
-  backdrop-filter: blur(2px);
-  background: rgba(0, 0, 0, 0.25);
-}
-nav {
-  backdrop-filter: blur(2px);
-  background: rgba(0, 0, 0, 0.25);
-  transition: all 0.3s ease-in-out;
-}
 
-/* 🖥️ Desktop: slim & elegant */
-@media (min-width: 769px) {
-  nav {
-    padding-top: 0.25rem !important;
-    padding-bottom: 0.25rem !important;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(1.5px);
-  }
+    @media (max-width: 480px) {
+      .service-card .card-image {
+        height: 220px;
+      }
+      
+      .service-card .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+      
+      .service-card {
+        margin-bottom: 1rem;
+      }
+    }
 
-  nav .container {
-    padding-top: 0.25rem !important;
-    padding-bottom: 0.25rem !important;
-  }
-}
+    @media (max-width: 360px) {
+      .service-card .card-image {
+        height: 200px;
+      }
+    }
 
-/* 📱 Mobile: taller & easier to tap */
-@media (max-width: 768px) {
-  nav {
-    backdrop-filter: blur(4px);
-    background: rgba(0, 0, 0, 0.45);
-    padding-top: 0.8rem !important;
-    padding-bottom: 0.8rem !important;
-  }
+    .service-card .duration-badge {
+      background: linear-gradient(135deg, rgba(56, 178, 172, 0.9), rgba(44, 122, 123, 0.9));
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
 
-  nav .container {
-    padding-top: 0.8rem !important;
-    padding-bottom: 0.8rem !important;
-  }
+    .service-card .rating-stars {
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
 
-  nav a {
-    font-size: 1.1rem !important;
-  }
+    .service-card .book-btn {
+      background: linear-gradient(135deg, #38b2ac, #2c7a7b);
+      border: none;
+      box-shadow: 0 4px 15px rgba(56, 178, 172, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-  #menu-toggle svg {
-    width: 1.75rem !important;
-    height: 1.75rem !important;
-  }
-}
-#yoga-sessions .col-12:hover > div {
-  transform: translateY(-4px);
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
- .fade-in {
-    opacity: 0;
-    animation: fadeIn 1.2s forwards;
-  }
-  .fade-in-slow {
-    opacity: 0;
-    animation: fadeIn 1.8s forwards;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+    .service-card .book-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
 
+    .service-card .book-btn:hover::before {
+      left: 100%;
+    }
+
+    .service-card .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56, 178, 172, 0.4);
+    }
+
+    /* 🎯 Feature Cards Styling */
+    .feature-card {
+      background: linear-gradient(145deg, #ffffff, #f8fafc);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(56, 178, 172, 0.05), rgba(44, 122, 123, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .feature-card .feature-icon {
+      background: linear-gradient(135deg, #38b2ac, #2c7a7b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    /* 🌟 Enhanced Icon Animations */
+    .icon-pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .icon-float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* 💬 Testimonials Section Styling */
+    .testimonial-card {
+      background: linear-gradient(145deg, #ffffff, #f8fafc);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #38b2ac, #2c7a7b, #38b2ac);
+      background-size: 200% 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .testimonial-quote {
+      position: relative;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .testimonial-quote::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: -15px;
+      font-size: 3rem;
+      color: #38b2ac;
+      opacity: 0.3;
+      font-family: serif;
+    }
+
+    .testimonial-quote::after {
+      content: '"';
+      position: absolute;
+      bottom: -20px;
+      right: -10px;
+      font-size: 3rem;
+      color: #38b2ac;
+      opacity: 0.3;
+      font-family: serif;
+    }
+
+    .testimonial-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid #38b2ac;
+      object-fit: cover;
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover .testimonial-avatar {
+      transform: scale(1.1);
+      border-color: #2c7a7b;
+    }
+
+    .testimonial-rating {
+      color: #fbbf24;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    }
+
+    .testimonial-section {
+      background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 50%, #f0f9ff 100%);
+      position: relative;
+    }
+
+    .testimonial-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%2338b2ac" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    /* 🌸 Gallery / Nature Harmony Section */
+    .gallery-section {
+      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 25%, #f0f9ff 50%, #fefce8 75%, #f0fdf4 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="nature" width="200" height="200" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="2" fill="%2338b2ac" opacity="0.03"/><circle cx="150" cy="100" r="1.5" fill="%232c7a7b" opacity="0.04"/><circle cx="100" cy="150" r="1" fill="%2338b2ac" opacity="0.02"/></pattern></defs><rect width="200" height="200" fill="url(%23nature)"/></svg>');
+      opacity: 0.6;
+    }
+
+    .gallery-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      background: linear-gradient(145deg, #ffffff, #f8fafc);
+    }
+
+    .gallery-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(56, 178, 172, 0.1), rgba(44, 122, 123, 0.1));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+
+    .gallery-card:hover::before {
+      opacity: 1;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-card:hover .gallery-image {
+      transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+      color: white;
+      padding: 20px;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      z-index: 2;
+    }
+
+    .gallery-card:hover .gallery-overlay {
+      transform: translateY(0);
+    }
+
+    .gallery-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .gallery-description {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .nature-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #38b2ac;
+      font-size: 1.2rem;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.3s ease;
+      z-index: 3;
+    }
+
+    .gallery-card:hover .nature-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Responsive grid adjustments */
+    @media (max-width: 768px) {
+      .gallery-card {
+        border-radius: 15px;
+      }
+      
+      .gallery-overlay {
+        padding: 15px;
+      }
+      
+      .gallery-title {
+        font-size: 1rem;
+      }
+      
+      .gallery-description {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Fallback: ensure content using AOS is visible if the script fails to load */
+    [data-aos] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
   </style>
 </head>
 
-<body class="text-gray-800">
+<body class="bg-white">
 
-  <!-- ✅ Navbar -->
- <nav class="fixed top-0 left-0 w-full bg-black/30 backdrop-blur-sm text-white z-50">
-  <div class="container mx-auto flex justify-between items-center py-1.5 px-3 md:px-5">
-    <a href="#" class="text-xl md:text-2xl font-bold">YogAura</a>
+  <!-- 🌿 Navbar -->
+  <nav class="fixed top-0 left-0 w-full text-white z-50">
+    <div class="container mx-auto flex justify-between items-center py-2 px-4 md:px-6">
+      <a href="#" class="text-2xl font-bold">YogAura</a>
+      <button id="menu-toggle" class="md:hidden focus:outline-none">
+        <i class="fa-solid fa-bars text-2xl"></i>
+      </button>
+      <ul id="menu" class="hidden md:flex flex-col md:flex-row absolute md:static top-full left-0 w-full md:w-auto 
+                 text-left md:text-left p-4 md:p-0 bg-black/50 md:bg-transparent space-y-3 md:space-y-0 md:space-x-6">
+        <li><a href="#hero" class="hover:text-yellow-400">Home</a></li>
+        <li><a href="#about" class="hover:text-yellow-400">About</a></li>
+        <li><a href="#benefits" class="hover:text-yellow-400">Benefits</a></li>
+        <li><a href="#classes" class="hover:text-yellow-400">Classes</a></li>
+        <li><a href="#testimonials" class="hover:text-yellow-400">Testimonials</a></li>
+        <li><a href="#gallery" class="hover:text-yellow-400">Gallery</a></li>
+        <li><a href="#contact" class="hover:text-yellow-400">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <!-- 🔽 Mobile Menu Button -->
-    <button id="menu-toggle" class="md:hidden focus:outline-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
+  <!-- 🌅 Hero Background (separate layer) -->
+  <div class="hero-bg"></div>
 
-    <!-- 🔽 Menu Links -->
-    <ul id="menu" class="hidden md:flex gap-5 flex-col md:flex-row absolute md:static top-12 left-0 w-full md:w-auto bg-black/70 md:bg-transparent text-center md:text-left md:space-x-5 p-3 md:p-0 text-sm md:text-base">
-      <li><a href="#hero" class="block py-1 hover:text-yellow-400">Home</a></li>
-      <li><a href="#instructors" class="block py-1 hover:text-yellow-400">About</a></li>
-      <li><a href="#yoga-schedule" class="block py-1 hover:text-yellow-400">Classes</a></li>
-      <li><a href="#instructors" class="block py-1 hover:text-yellow-400">Instructors</a></li>
-      <li><a href="#contact" class="block py-1 hover:text-yellow-400">Contact</a></li>
-    </ul>
-  </div>
-</nav>
+  <!-- 🌞 Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4 leading-tight">Find Peace in Every Flow</h1>
+      <p class="text-lg md:text-xl mb-6 text-gray-100">Reconnect with nature and yourself through mindful yoga and serenity.</p>
+      <button class="hero-btn px-6 py-3 rounded-full text-lg shadow-lg mb-8">Start Your Journey</button>
 
-
-  <!-- Hero Section -->
-  <section id="hero" class="hero-bg flex items-center justify-center text-center text-white relative">
-    <div class="overlay"></div>
-    <div class="container hero-content px-4 md:px-10 flex flex-col md:flex-row items-center justify-between gap-8">
-      <div class="text-start md:w-2/3">
-        <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">
-          Discover <em class="italic font-light">balance and</em><br>
-          <em class="italic font-light">inner harmony at our<br>yoga studio</em>
-        </h1>
-        <p class="text-lg font-bold mb-6">
-          We believe in the transformative power of yoga to nurture not just the body,
-          but also the mind and soul.
-        </p>
-        <a href="#" class="btn bg-white text-gray-900 px-5 py-3 rounded-full font-semibold shadow">
-          Buy a subscription
-        </a>
-      </div>
-      <div class="circle-video">
-        <video autoplay loop muted playsinline>
-          <source src="https://www.pexels.com/download/video/8231710/" type="video/mp4" autoplay loop muted />
-          Your browser does not support the video tag.
-        </video>
+      <p class="text-lg font-medium text-teal-200 mb-5">Yoga finds the solution for</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-5 text-center text-white">
+        <div class="hover:scale-110 transition duration-300"><i class="fa-solid fa-brain text-3xl text-teal-300 mb-2 icon-pulse"></i><p>Mental Clarity</p></div>
+        <div class="hover:scale-110 transition duration-300"><i class="fa-solid fa-heart text-3xl text-teal-300 mb-2 icon-float"></i><p>Healthy Heart</p></div>
+        <div class="hover:scale-110 transition duration-300"><i class="fa-solid fa-spa text-3xl text-teal-300 mb-2 icon-pulse"></i><p>Inner Peace</p></div>
+        <div class="hover:scale-110 transition duration-300"><i class="fa-solid fa-dumbbell text-3xl text-teal-300 mb-2 icon-float"></i><p>Strength</p></div>
+        <div class="hover:scale-110 transition duration-300"><i class="fa-solid fa-lungs text-3xl text-teal-300 mb-2 icon-pulse"></i><p>Better Breathing</p></div>
+        <div class="hover:scale-110 transition duration-300"><i class="fa-solid fa-moon text-3xl text-teal-300 mb-2 icon-float"></i><p>Deep Sleep</p></div>
+        <div class="hover:scale-110 transition duration-300"><i class="fa-solid fa-om text-3xl text-teal-300 mb-2 icon-pulse"></i><p>Spiritual Calm</p></div>
+        <div class="hover:scale-110 transition duration-300"><i class="fa-solid fa-ellipsis text-3xl text-teal-300 mb-2 icon-float"></i><p>More...</p></div>
       </div>
     </div>
   </section>
-  <section class="py-5 bg-white" id="yoga-sessions">
-  <div class="container text-center">
-    <!-- Section Heading -->
-    <h2 class="text-3xl md:text-4xl font-semibold mb-3 leading-tight text-gray-800">
-      Yoga sessions this <em class="italic font-normal">find balance</em><br />
-      and inner peace
-    </h2>
 
-    <!-- Yoga Cards -->
-    <div class="row justify-content-center mt-4 g-4">
+  <!-- 🌸 About Section -->
+  <section id="about" class="py-20 bg-gradient-to-br from-teal-50 via-white to-blue-50 relative z-10 overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute top-10 left-10 w-32 h-32 bg-teal-300 rounded-full"></div>
+      <div class="absolute top-40 right-20 w-24 h-24 bg-blue-300 rounded-full"></div>
+      <div class="absolute bottom-20 left-1/4 w-20 h-20 bg-green-300 rounded-full"></div>
+      <div class="absolute bottom-40 right-1/3 w-28 h-28 bg-teal-400 rounded-full"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+      <!-- Section Header -->
+      <div class="text-center mb-16" data-aos="fade-up">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full mb-6">
+          <i class="fa-solid fa-om text-white text-2xl"></i>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">About YogAura</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Where ancient wisdom meets modern wellness, creating a sanctuary for your mind, body, and soul.
+        </p>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+        <!-- Image Section -->
+        <div class="relative" data-aos="fade-right">
+          <div class="relative">
+            <img src="https://images.pexels.com/photos/1303880/pexels-photo-1303880.jpeg" 
+                 alt="Yoga nature" 
+                 class="rounded-3xl shadow-2xl w-full h-96 object-cover">
+            <!-- Floating Elements -->
+            <div class="absolute -top-6 -left-6 bg-white rounded-2xl p-4 shadow-lg">
+              <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full flex items-center justify-center">
+                  <i class="fa-solid fa-heart text-white"></i>
+                </div>
+                <div>
+                  <div class="text-2xl font-bold text-gray-800">500+</div>
+                  <div class="text-sm text-gray-600">Happy Students</div>
+                </div>
+              </div>
+            </div>
+            <div class="absolute -bottom-6 -right-6 bg-white rounded-2xl p-4 shadow-lg">
+              <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center">
+                  <i class="fa-solid fa-star text-white"></i>
+                </div>
+                <div>
+                  <div class="text-2xl font-bold text-gray-800">4.9</div>
+                  <div class="text-sm text-gray-600">Average Rating</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="space-y-8" data-aos="fade-left">
+          <div>
+            <h3 class="text-3xl font-bold text-gray-800 mb-6">Our Story & Mission</h3>
+            <div class="space-y-4 text-lg text-gray-700 leading-relaxed">
+              <p>
+                Founded in 2019, YogAura emerged from a simple yet profound belief: <span class="font-semibold text-teal-600">everyone deserves access to inner peace and physical wellness</span>. Our journey began when our founder, Sarah, discovered yoga's transformative power during a challenging period in her life.
+              </p>
+              <p>
+                Today, we've created a <span class="font-semibold text-blue-600">holistic sanctuary</span> where ancient yoga traditions blend seamlessly with modern wellness practices. Our certified instructors guide students through personalized journeys of self-discovery and healing.
+              </p>
+            </div>
+          </div>
+
+          <!-- Mission Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-teal-500">
+              <div class="flex items-center mb-4">
+                <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mr-3">
+                  <i class="fa-solid fa-compass text-teal-600"></i>
+                </div>
+                <h4 class="text-lg font-semibold text-gray-800">Our Mission</h4>
+              </div>
+              <p class="text-gray-600 text-sm">To guide every individual toward inner harmony through authentic yoga practices and mindful living.</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500">
+              <div class="flex items-center mb-4">
+                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                  <i class="fa-solid fa-eye text-blue-600"></i>
+                </div>
+                <h4 class="text-lg font-semibold text-gray-800">Our Vision</h4>
+              </div>
+              <p class="text-gray-600 text-sm">A world where yoga's healing power transforms lives and creates lasting peace in every community.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Section -->
+      <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12" data-aos="fade-up">
+        <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Impact in Numbers</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fa-solid fa-users text-white text-2xl"></i>
+            </div>
+            <div class="text-3xl font-bold text-gray-800 mb-2">500+</div>
+            <div class="text-gray-600">Students Transformed</div>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fa-solid fa-calendar text-white text-2xl"></i>
+            </div>
+            <div class="text-3xl font-bold text-gray-800 mb-2">5</div>
+            <div class="text-gray-600">Years of Excellence</div>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fa-solid fa-chalkboard-teacher text-white text-2xl"></i>
+            </div>
+            <div class="text-3xl font-bold text-gray-800 mb-2">12</div>
+            <div class="text-gray-600">Expert Instructors</div>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fa-solid fa-clock text-white text-2xl"></i>
+            </div>
+            <div class="text-3xl font-bold text-gray-800 mb-2">50+</div>
+            <div class="text-gray-600">Weekly Classes</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Values Section -->
+      <div class="mt-20" data-aos="fade-up">
+        <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Core Values</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center group">
+            <div class="w-24 h-24 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+              <i class="fa-solid fa-leaf text-white text-3xl"></i>
+            </div>
+            <h4 class="text-xl font-semibold text-gray-800 mb-4">Authenticity</h4>
+            <p class="text-gray-600">We honor traditional yoga practices while adapting them for modern life, ensuring every class is genuine and meaningful.</p>
+          </div>
+          
+          <div class="text-center group">
+            <div class="w-24 h-24 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+              <i class="fa-solid fa-hands-helping text-white text-3xl"></i>
+            </div>
+            <h4 class="text-xl font-semibold text-gray-800 mb-4">Compassion</h4>
+            <p class="text-gray-600">We create a supportive, non-judgmental environment where every student feels welcomed and valued.</p>
+          </div>
+          
+          <div class="text-center group">
+            <div class="w-24 h-24 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+              <i class="fa-solid fa-seedling text-white text-3xl"></i>
+            </div>
+            <h4 class="text-xl font-semibold text-gray-800 mb-4">Growth</h4>
+            <p class="text-gray-600">We believe in continuous learning and personal development, both for our students and our community.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🧘‍♀️ Meditation & Wellness Sanctuary -->
+  <section class="py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
+    <!-- Calming Background Elements -->
+    <div class="absolute inset-0">
+      <!-- Floating Circles -->
+      <div class="absolute top-20 left-10 w-40 h-40 bg-blue-200 rounded-full opacity-20 animate-pulse"></div>
+      <div class="absolute top-40 right-20 w-32 h-32 bg-indigo-200 rounded-full opacity-15 animate-pulse" style="animation-delay: 2s;"></div>
+      <div class="absolute bottom-32 left-1/4 w-24 h-24 bg-teal-200 rounded-full opacity-25 animate-pulse" style="animation-delay: 4s;"></div>
+      <div class="absolute bottom-20 right-1/3 w-36 h-36 bg-slate-200 rounded-full opacity-20 animate-pulse" style="animation-delay: 1s;"></div>
       
-      <!-- Card 1 -->
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="p-4 rounded-2xl shadow-sm bg-[#829c8e] text-white h-100 flex flex-col">
-          <div class="mb-3">
-            <div class="w-10 h-10 bg-white/40 rounded-lg flex items-center justify-center mx-auto">
-              <i class="bi bi-flower1 text-white text-xl"></i>
-            </div>
-          </div>
-          <h4 class="text-lg font-semibold mb-2">Vinyasa Flow</h4>
-          <p class="text-sm leading-relaxed">
-           Vinyasa Flow is a dynamic and fluid style of yoga that synchronizes breath with movement. The classes involve a sequence of poses that transition smoothly, promoting strength, flexibility, and mindfulness. It's a great way to build heat in the body and enhance cardiovascular fitness.
-          </p>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="p-4 rounded-2xl shadow-sm bg-[#829c8e] text-white h-100 flex flex-col">
-          <div class="mb-3">
-            <div class="w-10 h-10 bg-white/40 rounded-lg flex items-center justify-center mx-auto">
-              <i class="bi bi-flower1 text-white text-xl"></i>
-            </div>
-          </div>
-          <h4 class="text-lg font-semibold mb-2">Hatha Yoga</h4>
-          <p class="text-sm leading-relaxed">
-           Hatha Yoga focuses on the fundamental postures and breathing techniques. It's a great starting point for beginners and emphasizes balance, flexibility, and relaxation. Hatha classes often incorporate a mix of poses and relaxation techniques to promote overall well-being.
-          </p>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="p-4 rounded-2xl shadow-sm bg-[#829c8e] text-white h-100 flex flex-col">
-          <div class="mb-3">
-            <div class="w-10 h-10 bg-white/40 rounded-lg flex items-center justify-center mx-auto">
-              <i class="bi bi-flower1 text-white text-xl"></i>
-            </div>
-          </div>
-          <h4 class="text-lg font-semibold mb-2">Kundalini Yoga</h4>
-          <p class="text-sm leading-relaxed">
-          Kundalini Yoga aims to awaken the spiritual energy within the body through a combination of breathwork, meditation, and dynamic postures. This practice focuses on expanding consciousness and achieving a deeper sense of self-awareness. Kundalini classes often incorporate mantra chanting and meditation.
-          </p>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="p-4 rounded-2xl shadow-sm bg-[#829c8e] text-white h-100 flex flex-col">
-          <div class="mb-3">
-            <div class="w-10 h-10 bg-white/40 rounded-lg flex items-center justify-center mx-auto">
-              <i class="bi bi-flower1 text-white text-xl"></i>
-            </div>
-          </div>
-          <h4 class="text-lg font-semibold mb-2">Yin Yoga</h4>
-          <p class="text-sm leading-relaxed">
-           Yin Yoga is a slow-paced style that targets the connective tissues and joints. Poses are held for longer durations, promoting deep relaxation and increased flexibility. Yin Yoga is a wonderful way to release tension and cultivate mindfulness, making it suitable for both beginners and experienced practitioners
-          </p>
-        </div>
-      </div>
-
+      <!-- Gentle Waves -->
+      <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-blue-100/30 to-transparent"></div>
+      <div class="absolute top-0 right-0 w-full h-24 bg-gradient-to-b from-indigo-100/20 to-transparent"></div>
     </div>
-  </div>
-</section>
 
-<!-- Expert Instructors Section -->
-<section id="instructors" class="py-16 bg-[#f9f8f6]">
-  <div class="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-10">
-    
-    <!-- Text Content -->
-    <div class="md:w-1/2 text-center md:text-left">
-      <h2 class="text-5xl font-semibold text-gray-800 leading-tight mb-4">
-        <em class="italic font-light">Expert</em> instructors
-      </h2>
-      <p class="text-gray-600 mb-8 text-base md:text-lg">
-        Each instructor is certified in their respective yoga discipline and is dedicated to guiding you on your journey with personalized attention.
+    <div class="container mx-auto px-4 relative z-10">
+      <!-- Section Header -->
+      <div class="text-center mb-20" data-aos="fade-up">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full mb-8 shadow-lg">
+          <i class="fa-solid fa-lotus text-white text-3xl"></i>
+        </div>
+        <h2 class="text-5xl md:text-6xl font-light text-slate-700 mb-6 tracking-wide">
+          Inner Sanctuary
+        </h2>
+        <p class="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
+          Step into a realm of tranquility where every breath brings you closer to your center, 
+          and every moment becomes a meditation.
+        </p>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-24">
+        <!-- Meditation Image -->
+        <div class="relative" data-aos="fade-right">
+          <div class="relative group">
+            <img src="https://images.pexels.com/photos/325468/pexels-photo-325468.jpeg" 
+                 alt="Peaceful meditation" 
+                 class="rounded-3xl shadow-2xl w-full h-[500px] object-cover transform group-hover:scale-105 transition-all duration-700">
+            
+            <!-- Overlay with Zen Quote -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent rounded-3xl"></div>
+            <div class="absolute bottom-8 left-8 right-8 text-white">
+              <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <i class="fa-solid fa-quote-left text-2xl text-blue-200 mb-4 block"></i>
+                <p class="text-lg font-light italic leading-relaxed">
+                  "In the silence of meditation, we discover the music of our soul."
+                </p>
+                <div class="mt-4 text-blue-200 text-sm">— Ancient Wisdom</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wellness Content -->
+        <div class="space-y-12" data-aos="fade-left">
+          <!-- Breathing Exercise -->
+          <div class="bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/30">
+            <div class="flex items-center mb-6">
+              <div class="w-16 h-16 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center mr-4">
+                <i class="fa-solid fa-wind text-white text-xl"></i>
+              </div>
+              <h3 class="text-2xl font-light text-slate-700">Breathing Meditation</h3>
+            </div>
+            <p class="text-slate-600 leading-relaxed mb-6">
+              Experience the power of conscious breathing. Our guided breathing sessions help you 
+              connect with your inner rhythm and find peace in the present moment.
+            </p>
+            <div class="flex items-center space-x-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-play text-blue-600"></i>
+              </div>
+              <span class="text-slate-600">5-minute guided session</span>
+            </div>
+          </div>
+
+          <!-- Mindfulness Practice -->
+          <div class="bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/30">
+            <div class="flex items-center mb-6">
+              <div class="w-16 h-16 bg-gradient-to-r from-teal-400 to-blue-500 rounded-full flex items-center justify-center mr-4">
+                <i class="fa-solid fa-leaf text-white text-xl"></i>
+              </div>
+              <h3 class="text-2xl font-light text-slate-700">Mindful Awareness</h3>
+            </div>
+            <p class="text-slate-600 leading-relaxed mb-6">
+              Cultivate present-moment awareness through gentle mindfulness practices. 
+              Learn to observe your thoughts without judgment and embrace inner stillness.
+            </p>
+            <div class="flex items-center space-x-4">
+              <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-clock text-teal-600"></i>
+              </div>
+              <span class="text-slate-600">10-minute mindfulness journey</span>
+            </div>
+          </div>
+
+          <!-- Peaceful Environment -->
+          <div class="bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/30">
+            <div class="flex items-center mb-6">
+              <div class="w-16 h-16 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full flex items-center justify-center mr-4">
+                <i class="fa-solid fa-mountain text-white text-xl"></i>
+              </div>
+              <h3 class="text-2xl font-light text-slate-700">Sacred Space</h3>
+            </div>
+            <p class="text-slate-600 leading-relaxed mb-6">
+              Our meditation spaces are designed to evoke serenity. Soft lighting, 
+              natural elements, and peaceful acoustics create the perfect environment for inner exploration.
+            </p>
+            <div class="flex items-center space-x-4">
+              <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-home text-indigo-600"></i>
+              </div>
+              <span class="text-slate-600">Dedicated meditation rooms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calming Statistics -->
+      <div class="bg-white/40 backdrop-blur-sm rounded-3xl shadow-2xl p-12 border border-white/30" data-aos="fade-up">
+        <h3 class="text-3xl font-light text-center text-slate-700 mb-16">Moments of Peace</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+          <div class="text-center">
+            <div class="w-24 h-24 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <i class="fa-solid fa-heart text-white text-2xl"></i>
+            </div>
+            <div class="text-4xl font-light text-slate-700 mb-3">15 min</div>
+            <div class="text-slate-600 font-light">Daily Meditation</div>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-24 h-24 bg-gradient-to-r from-teal-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <i class="fa-solid fa-brain text-white text-2xl"></i>
+            </div>
+            <div class="text-4xl font-light text-slate-700 mb-3">85%</div>
+            <div class="text-slate-600 font-light">Stress Reduction</div>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-24 h-24 bg-gradient-to-r from-indigo-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <i class="fa-solid fa-moon text-white text-2xl"></i>
+            </div>
+            <div class="text-4xl font-light text-slate-700 mb-3">40%</div>
+            <div class="text-slate-600 font-light">Better Sleep</div>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-24 h-24 bg-gradient-to-r from-purple-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <i class="fa-solid fa-smile text-white text-2xl"></i>
+            </div>
+            <div class="text-4xl font-light text-slate-700 mb-3">92%</div>
+            <div class="text-slate-600 font-light">Inner Peace</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zen Quote Section -->
+      <div class="mt-24 text-center" data-aos="fade-up">
+        <div class="max-w-4xl mx-auto">
+          <div class="bg-white/30 backdrop-blur-sm rounded-3xl p-12 border border-white/40 shadow-xl">
+            <div class="flex items-center justify-center mb-8">
+              <div class="w-16 h-16 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-om text-white text-2xl"></i>
+              </div>
+            </div>
+            <blockquote class="text-2xl md:text-3xl font-light text-slate-700 italic leading-relaxed mb-8">
+              "Peace comes from within. Do not seek it without."
+            </blockquote>
+            <div class="text-slate-600 text-lg font-light">— Buddha</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🌿 Benefits Section -->
+  <section id="benefits" class="py-20 bg-gradient-to-b from-white to-teal-50 relative z-10">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">Discover the Benefits of Yoga</h2>
+      <p class="text-lg text-gray-600 mb-12 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+        Experience the harmony of body, mind, and soul with daily yoga practice.
       </p>
-      <a href="#" class="bg-[#829c8e] hover:bg-[#6b877b] text-white font-medium px-6 py-3 rounded-full transition-all duration-300 shadow-md">
-        Buy a subscription
-      </a>
-    </div>
 
-    <!-- Image -->
-    <div class="md:w-1/2 flex justify-center md:justify-end">
-      <div class="relative overflow-hidden rounded-[50%] md:rounded-[40%] shadow-lg max-w-md">
-        <img src="https://images.pexels.com/photos/3758127/pexels-photo-3758127.jpeg" 
-             alt="Yoga Instructor" 
-             class="w-full h-full object-cover">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div class="bg-white shadow-lg rounded-2xl p-8 hover:scale-105 transition duration-500" data-aos="fade-up">
+          <i class="fa-solid fa-person-running text-teal-500 text-5xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Flexibility</h3>
+          <p class="text-gray-600 text-sm">Enhance flexibility, mobility, and posture with gentle yoga flow.</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-2xl p-8 hover:scale-105 transition duration-500" data-aos="fade-up" data-aos-delay="100">
+          <i class="fa-solid fa-brain text-teal-500 text-5xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Mental Clarity</h3>
+          <p class="text-gray-600 text-sm">Quiet the mind and focus better through mindful breathing and meditation.</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-2xl p-8 hover:scale-105 transition duration-500" data-aos="fade-up" data-aos-delay="200">
+          <i class="fa-solid fa-heart text-teal-500 text-5xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Healthy Heart</h3>
+          <p class="text-gray-600 text-sm">Boost circulation, reduce stress, and improve heart health naturally.</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-2xl p-8 hover:scale-105 transition duration-500" data-aos="fade-up" data-aos-delay="300">
+          <i class="fa-solid fa-face-smile text-teal-500 text-5xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Emotional Balance</h3>
+          <p class="text-gray-600 text-sm">Find inner peace and emotional balance through consistent yoga practice.</p>
+        </div>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
-<!-- 🌿 Testimonial Section -->
-<section class="py-16 bg-[#f8f9f7]">
-  <div class="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-
-    <!-- 💬 Testimonial Card -->
-    <div class="bg-[#829c8e] text-white p-10 rounded-3xl relative shadow-md">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"
-        class="absolute top-6 left-6 w-8 h-8 opacity-20">
-        <path
-          d="M6.854 1C4.351 1 2 3.404 2 6.013c0 1.736 1.015 3.275 2.452 3.907-.074.578-.18 1.403-.312 2.063-.144.708-.312 1.247-.554 1.683-.256.465-.622.801-1.119 1.053-.427.217-.97.281-1.467.281v1h1.373c.84 0 1.51-.164 2.088-.493.605-.346 1.096-.878 1.488-1.54.39-.662.707-1.505.917-2.457.21-.952.343-2.033.343-3.264V1zm8 0C12.351 1 10 3.404 10 6.013c0 1.736 1.015 3.275 2.452 3.907-.074.578-.18 1.403-.312 2.063-.144.708-.312 1.247-.554 1.683-.256.465-.622.801-1.119 1.053-.427.217-.97.281-1.467.281v1h1.373c.84 0 1.51-.164 2.088-.493.605-.346 1.096-.878 1.488-1.54.39-.662.707-1.505.917-2.457.21-.952.343-2.033.343-3.264V1z" />
-      </svg>
-
-      <p class="text-lg leading-relaxed mt-6">
-        “Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-        there live the blind texts. A small river named Duden flows by their place and supplies it
-        with the necessary regelialia.”
+  <!-- 🧘‍♀️ Classes / Services Section -->
+  <section id="classes" class="py-20 bg-white relative z-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">Our Classes & Services</h2>
+      <p class="text-lg text-gray-600 mb-12 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+        Discover our diverse range of yoga practices designed to nurture your mind, body, and soul.
       </p>
 
-      <div class="flex items-center mt-8">
-        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client"
-          class="w-14 h-14 rounded-full border-4 border-white/40 mr-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Hatha Yoga Card -->
+        <div class="service-card rounded-2xl overflow-hidden" data-aos="fade-up">
+          <div class="card-image h-48 overflow-hidden relative">
+            <img src="assets/Hatha.png" alt="Hatha Yoga" class="w-full h-full object-cover object-center">
+            <div class="duration-badge absolute top-4 right-4 text-white px-3 py-1 rounded-full text-sm font-semibold">
+              60 min
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-3 text-teal-800">Hatha Yoga</h3>
+            <p class="text-gray-600 text-sm mb-4">Gentle poses and breathing techniques for beginners and those seeking balance.</p>
+            <div class="rating-stars flex items-center mb-4">
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-2"></i>
+              <span class="text-sm text-gray-500">4.9 (127)</span>
+            </div>
+            <button class="book-btn w-full text-white py-2 px-4 rounded-lg font-medium">
+              Book Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Meditation Card -->
+        <div class="service-card rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-image h-48 overflow-hidden relative">
+            <img src="assets/Meditation.png" alt="Meditation" class="w-full h-full object-cover object-center">
+            <div class="duration-badge absolute top-4 right-4 text-white px-3 py-1 rounded-full text-sm font-semibold" style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.9), rgba(124, 58, 237, 0.9));">
+              45 min
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-3 text-purple-800">Meditation</h3>
+            <p class="text-gray-600 text-sm mb-4">Mindful practices to calm the mind and find inner peace and clarity.</p>
+            <div class="rating-stars flex items-center mb-4">
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-2"></i>
+              <span class="text-sm text-gray-500">4.8 (95)</span>
+            </div>
+            <button class="book-btn w-full text-white py-2 px-4 rounded-lg font-medium" style="background: linear-gradient(135deg, #9333ea, #7c3aed);">
+              Book Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Pranayama Card -->
+        <div class="service-card rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-image h-48 overflow-hidden relative">
+            <img src="assets/Prnayama.png" alt="Pranayama" class="w-full h-full object-cover object-center">
+            <div class="duration-badge absolute top-4 right-4 text-white px-3 py-1 rounded-full text-sm font-semibold" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.9));">
+              30 min
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-3 text-blue-800">Pranayama</h3>
+            <p class="text-gray-600 text-sm mb-4">Breathing exercises to enhance vitality and improve respiratory health.</p>
+            <div class="rating-stars flex items-center mb-4">
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-2"></i>
+              <span class="text-sm text-gray-500">4.9 (78)</span>
+            </div>
+            <button class="book-btn w-full text-white py-2 px-4 rounded-lg font-medium" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+              Book Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Mindfulness Card -->
+        <div class="service-card rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-image h-48 overflow-hidden relative">
+            <img src="assets/Mindfull.png" alt="Mindfulness" class="w-full h-full object-cover object-center">
+            <div class="duration-badge absolute top-4 right-4 text-white px-3 py-1 rounded-full text-sm font-semibold" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(22, 163, 74, 0.9));">
+              50 min
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-3 text-green-800">Mindfulness</h3>
+            <p class="text-gray-600 text-sm mb-4">Present-moment awareness practices for stress reduction and mental clarity.</p>
+            <div class="rating-stars flex items-center mb-4">
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-1"></i>
+              <i class="fa-solid fa-star text-yellow-400 mr-2"></i>
+              <span class="text-sm text-gray-500">4.7 (112)</span>
+            </div>
+            <button class="book-btn w-full text-white py-2 px-4 rounded-lg font-medium" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
+              Book Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="mt-12 bg-gradient-to-r from-teal-50 to-blue-50 rounded-2xl p-8 relative z-10" data-aos="fade-up" data-aos-delay="400">
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Why Choose YogAura?</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div class="feature-card rounded-xl p-6">
+            <i class="feature-icon fa-solid fa-users text-3xl mb-3 icon-pulse"></i>
+            <h4 class="font-semibold text-teal-700 mb-2">Expert Instructors</h4>
+            <p class="text-gray-600 text-sm">Certified teachers with years of experience guiding your journey</p>
+          </div>
+          <div class="feature-card rounded-xl p-6">
+            <i class="feature-icon fa-solid fa-heart text-3xl mb-3 icon-float"></i>
+            <h4 class="font-semibold text-teal-700 mb-2">Holistic Approach</h4>
+            <p class="text-gray-600 text-sm">Mind, body, and spirit wellness through authentic practices</p>
+          </div>
+          <div class="feature-card rounded-xl p-6">
+            <i class="feature-icon fa-solid fa-leaf text-3xl mb-3 icon-pulse"></i>
+            <h4 class="font-semibold text-teal-700 mb-2">Natural Environment</h4>
+            <p class="text-gray-600 text-sm">Peaceful spaces designed for relaxation and inner peace</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 💬 Testimonials Section -->
+  <section id="testimonials" class="testimonial-section py-20 relative z-20">
+    <div class="container mx-auto px-4 text-center relative z-10">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">What Our Students Say</h2>
+      <p class="text-lg text-gray-600 mb-12 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+        Discover the transformative experiences of our yoga community through heartfelt testimonials.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card rounded-2xl p-8" data-aos="fade-up">
+          <div class="flex items-center justify-center mb-4">
+            <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" alt="Sarah Johnson" class="testimonial-avatar mr-4">
+            <div class="text-left">
+              <h4 class="font-semibold text-gray-800">Sarah Johnson</h4>
+              <p class="text-sm text-gray-600">Meditation Student</p>
+            </div>
+          </div>
+          <div class="testimonial-rating mb-4">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-quote text-gray-700">
+            YogAura has completely transformed my life. The meditation classes helped me find inner peace I never knew existed. The instructors are incredibly patient and knowledgeable.
+          </p>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card rounded-2xl p-8" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex items-center justify-center mb-4">
+            <img src="https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg" alt="Michael Chen" class="testimonial-avatar mr-4">
+            <div class="text-left">
+              <h4 class="font-semibold text-gray-800">Michael Chen</h4>
+              <p class="text-sm text-gray-600">Hatha Yoga Student</p>
+            </div>
+          </div>
+          <div class="testimonial-rating mb-4">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-quote text-gray-700">
+            As a beginner, I was nervous about starting yoga. The Hatha classes at YogAura made me feel comfortable and supported. I've gained so much flexibility and strength!
+          </p>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
+          <div class="flex items-center justify-center mb-4">
+            <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg" alt="Emma Davis" class="testimonial-avatar mr-4">
+            <div class="text-left">
+              <h4 class="font-semibold text-gray-800">Emma Davis</h4>
+              <p class="text-sm text-gray-600">Pranayama Student</p>
+            </div>
+          </div>
+          <div class="testimonial-rating mb-4">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-quote text-gray-700">
+            The Pranayama breathing techniques have improved my respiratory health significantly. The peaceful environment and expert guidance make every session a blessing.
+          </p>
+        </div>
+
+        <!-- Testimonial 4 -->
+        <div class="testimonial-card rounded-2xl p-8" data-aos="fade-up" data-aos-delay="300">
+          <div class="flex items-center justify-center mb-4">
+            <img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" alt="David Wilson" class="testimonial-avatar mr-4">
+            <div class="text-left">
+              <h4 class="font-semibold text-gray-800">David Wilson</h4>
+              <p class="text-sm text-gray-600">Mindfulness Student</p>
+            </div>
+          </div>
+          <div class="testimonial-rating mb-4">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-quote text-gray-700">
+            Mindfulness practices at YogAura have helped me manage stress and anxiety. The holistic approach truly nurtures mind, body, and spirit. Highly recommended!
+          </p>
+        </div>
+
+        <!-- Testimonial 5 -->
+        <div class="testimonial-card rounded-2xl p-8" data-aos="fade-up" data-aos-delay="400">
+          <div class="flex items-center justify-center mb-4">
+            <img src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg" alt="Lisa Martinez" class="testimonial-avatar mr-4">
+            <div class="text-left">
+              <h4 class="font-semibold text-gray-800">Lisa Martinez</h4>
+              <p class="text-sm text-gray-600">Advanced Student</p>
+            </div>
+          </div>
+          <div class="testimonial-rating mb-4">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-quote text-gray-700">
+            I've been practicing yoga for years, but YogAura's approach is unique. The instructors are authentic, the space is serene, and the community is welcoming.
+          </p>
+        </div>
+
+        <!-- Testimonial 6 -->
+        <div class="testimonial-card rounded-2xl p-8" data-aos="fade-up" data-aos-delay="500">
+          <div class="flex items-center justify-center mb-4">
+            <img src="https://images.pexels.com/photos/1040881/pexels-photo-1040881.jpeg" alt="James Taylor" class="testimonial-avatar mr-4">
+            <div class="text-left">
+              <h4 class="font-semibold text-gray-800">James Taylor</h4>
+              <p class="text-sm text-gray-600">Regular Student</p>
+            </div>
+          </div>
+          <div class="testimonial-rating mb-4">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-quote text-gray-700">
+            The combination of physical practice and spiritual guidance at YogAura has brought balance to my busy life. It's more than just yoga - it's a lifestyle.
+          </p>
+        </div>
+      </div>
+
+      <!-- Trust Indicators -->
+      <div class="mt-16 bg-white/80 backdrop-blur-sm rounded-2xl p-8" data-aos="fade-up" data-aos-delay="600">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">Join Our Growing Community</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+          <div>
+            <div class="text-3xl font-bold text-teal-600 mb-2">500+</div>
+            <p class="text-gray-600">Happy Students</p>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-teal-600 mb-2">4.9</div>
+            <p class="text-gray-600">Average Rating</p>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-teal-600 mb-2">50+</div>
+            <p class="text-gray-600">Classes Weekly</p>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-teal-600 mb-2">5</div>
+            <p class="text-gray-600">Years Experience</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🌸 Gallery / Nature Harmony Section -->
+  <section id="gallery" class="gallery-section py-20 relative z-20">
+    <div class="container mx-auto px-4 text-center relative z-10">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">Nature Harmony</h2>
+      <p class="text-lg text-gray-600 mb-12 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+        Immerse yourself in the peaceful beauty of nature where yoga meets serenity.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Sunrise Yoga -->
+        <div class="gallery-card h-80" data-aos="fade-up">
+          <img src="https://images.pexels.com/photos/1051838/pexels-photo-1051838.jpeg" alt="Sunrise Yoga" class="gallery-image">
+          <div class="nature-icon">
+            <i class="fa-solid fa-sun"></i>
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-title">Sunrise Meditation</div>
+            <div class="gallery-description">Begin your day with peaceful morning practice</div>
+          </div>
+        </div>
+
+        <!-- Forest Yoga -->
+        <div class="gallery-card h-80" data-aos="fade-up" data-aos-delay="100">
+          <img src="https://images.pexels.com/photos/1234035/pexels-photo-1234035.jpeg" alt="Forest Yoga" class="gallery-image">
+          <div class="nature-icon">
+            <i class="fa-solid fa-tree"></i>
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-title">Forest Sanctuary</div>
+            <div class="gallery-description">Connect with nature in our peaceful woodland setting</div>
+          </div>
+        </div>
+
+        <!-- Mountain View -->
+        <div class="gallery-card h-80" data-aos="fade-up" data-aos-delay="200">
+          <img src="https://images.pexels.com/photos/5667477/pexels-photo-5667477.jpeg" alt="Mountain Yoga" class="gallery-image">
+          <div class="nature-icon">
+            <i class="fa-solid fa-mountain"></i>
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-title">Mountain Views</div>
+            <div class="gallery-description">Practice with breathtaking mountain vistas</div>
+          </div>
+        </div>
+
+        <!-- Beach Yoga -->
+        <div class="gallery-card h-80" data-aos="fade-up" data-aos-delay="300">
+          <img src="https://images.pexels.com/photos/5928631/pexels-photo-5928631.jpeg" alt="Beach Yoga" class="gallery-image">
+          <div class="nature-icon">
+            <i class="fa-solid fa-water"></i>
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-title">Ocean Breeze</div>
+            <div class="gallery-description">Feel the calming rhythm of waves during practice</div>
+          </div>
+        </div>
+
+        <!-- Garden Yoga -->
+        <div class="gallery-card h-80" data-aos="fade-up" data-aos-delay="400">
+          <img src="https://images.pexels.com/photos/6787357/pexels-photo-6787357.jpeg" alt="Garden Yoga" class="gallery-image">
+          <div class="nature-icon">
+            <i class="fa-solid fa-seedling"></i>
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-title">Zen Garden</div>
+            <div class="gallery-description">Find peace in our carefully curated garden space</div>
+          </div>
+        </div>
+
+        <!-- Sunset Practice -->
+        <div class="gallery-card h-80" data-aos="fade-up" data-aos-delay="500">
+          <img src="https://images.pexels.com/photos/268134/pexels-photo-268134.jpeg" alt="Sunset Yoga" class="gallery-image">
+          <div class="nature-icon">
+            <i class="fa-solid fa-moon"></i>
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-title">Evening Serenity</div>
+            <div class="gallery-description">Wind down with gentle sunset sessions</div>
+          </div>
+        </div>
+
+        <!-- Waterfall Meditation -->
+        <div class="gallery-card h-80" data-aos="fade-up" data-aos-delay="600">
+          <img src="https://images.pexels.com/photos/15684246/pexels-photo-15684246.jpeg" alt="Waterfall Meditation" class="gallery-image">
+          <div class="nature-icon">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-title">Waterfall Sounds</div>
+            <div class="gallery-description">Meditate to the soothing sounds of flowing water</div>
+          </div>
+        </div>
+
+        <!-- Meadow Yoga -->
+        <div class="gallery-card h-80" data-aos="fade-up" data-aos-delay="700">
+          <img src="https://images.pexels.com/photos/4793304/pexels-photo-4793304.jpeg" alt="Meadow Yoga" class="gallery-image">
+          <div class="nature-icon">
+            <i class="fa-solid fa-flower"></i>
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-title">Wildflower Meadow</div>
+            <div class="gallery-description">Practice surrounded by blooming wildflowers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nature Quote -->
+      <div class="mt-16 bg-white/90 backdrop-blur-sm rounded-2xl p-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="800">
+        <div class="flex items-center justify-center mb-6">
+          <i class="fa-solid fa-quote-left text-teal-500 text-3xl mr-4"></i>
+          <h3 class="text-2xl font-bold text-gray-800">Nature Connection</h3>
+        </div>
+        <p class="text-lg text-gray-700 italic leading-relaxed">
+          "In every walk with nature, one receives far more than they seek. Our outdoor yoga spaces are designed to help you reconnect with the earth's natural rhythm and find inner peace through mindful movement."
+        </p>
+        <div class="mt-6 flex justify-center">
+          <div class="flex items-center space-x-4 text-teal-600">
+            <i class="fa-solid fa-leaf text-xl"></i>
+            <span class="font-medium">Embrace the Harmony</span>
+            <i class="fa-solid fa-leaf text-xl"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📞 Contact Section -->
+  <section id="contact" class="py-20 bg-gradient-to-b from-teal-50 to-white relative z-20">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">Get In Touch</h2>
+        <p class="text-lg text-gray-600 mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+          Ready to begin your yoga journey? We're here to guide you every step of the way. Contact us today to start your transformation.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Contact Form -->
+        <div class="bg-white rounded-2xl shadow-xl p-8" data-aos="fade-right">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6">Send us a Message</h3>
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                <input type="text" id="firstName" name="firstName" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                       placeholder="Your first name">
+              </div>
+              <div>
+                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                <input type="text" id="lastName" name="lastName" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                       placeholder="Your last name">
+              </div>
+            </div>
+            
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+              <input type="email" id="email" name="email" 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                     placeholder="your.email@example.com">
+            </div>
+            
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+              <input type="tel" id="phone" name="phone" 
+                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                     placeholder="+1 (555) 123-4567">
+            </div>
+            
+            <div>
+              <label for="interest" class="block text-sm font-medium text-gray-700 mb-2">I'm interested in</label>
+              <select id="interest" name="interest" 
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300">
+                <option value="">Select a class or service</option>
+                <option value="hatha">Hatha Yoga</option>
+                <option value="meditation">Meditation</option>
+                <option value="pranayama">Pranayama</option>
+                <option value="mindfulness">Mindfulness</option>
+                <option value="private">Private Sessions</option>
+                <option value="retreat">Yoga Retreats</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+              <textarea id="message" name="message" rows="5" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 resize-none"
+                        placeholder="Tell us about your yoga journey and how we can help..."></textarea>
+            </div>
+            
+            <button type="submit" 
+                    class="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:from-teal-600 hover:to-teal-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+              <i class="fa-solid fa-paper-plane mr-2"></i>
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="space-y-8" data-aos="fade-left">
+          <!-- Contact Cards -->
+          <div class="bg-white rounded-2xl shadow-xl p-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Contact Information</h3>
+            
+            <div class="space-y-6">
+              <!-- Phone -->
+              <div class="flex items-start space-x-4">
+                <div class="bg-teal-100 p-3 rounded-full">
+                  <i class="fa-solid fa-phone text-teal-600 text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 mb-1">Phone</h4>
+                  <p class="text-gray-600">+1 (555) 123-4567</p>
+                  <p class="text-gray-600">+1 (555) 987-6543</p>
+                </div>
+              </div>
+              
+              <!-- Email -->
+              <div class="flex items-start space-x-4">
+                <div class="bg-teal-100 p-3 rounded-full">
+                  <i class="fa-solid fa-envelope text-teal-600 text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 mb-1">Email</h4>
+                  <p class="text-gray-600">info@yogaura.com</p>
+                  <p class="text-gray-600">classes@yogaura.com</p>
+                </div>
+              </div>
+              
+              <!-- Address -->
+              <div class="flex items-start space-x-4">
+                <div class="bg-teal-100 p-3 rounded-full">
+                  <i class="fa-solid fa-map-marker-alt text-teal-600 text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 mb-1">Address</h4>
+                  <p class="text-gray-600">123 Serenity Lane<br>Peaceful Valley, CA 90210</p>
+                </div>
+              </div>
+              
+              <!-- Hours -->
+              <div class="flex items-start space-x-4">
+                <div class="bg-teal-100 p-3 rounded-full">
+                  <i class="fa-solid fa-clock text-teal-600 text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 mb-1">Studio Hours</h4>
+                  <p class="text-gray-600">Monday - Friday: 6:00 AM - 9:00 PM</p>
+                  <p class="text-gray-600">Saturday - Sunday: 7:00 AM - 8:00 PM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🦶 Footer Section -->
+  <footer class="bg-gray-900 text-white relative z-20">
+    <!-- Main Footer Content -->
+    <div class="container mx-auto px-4 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Company Info -->
+        <div class="lg:col-span-1">
+          <div class="mb-6">
+            <h3 class="text-3xl font-bold text-teal-400 mb-4">YogAura</h3>
+            <p class="text-gray-300 leading-relaxed mb-6">
+              Find peace in every flow. We're dedicated to helping you discover inner harmony through authentic yoga practices and mindful living.
+            </p>
+          </div>
+          
+          <!-- Social Media Icons -->
+          <div class="mb-6">
+            <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+            <div class="flex space-x-4">
+              <a href="#" class="bg-teal-600 hover:bg-teal-700 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
+                <i class="fab fa-facebook-f text-white"></i>
+              </a>
+              <a href="#" class="bg-teal-600 hover:bg-teal-700 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
+                <i class="fab fa-instagram text-white"></i>
+              </a>
+              <a href="#" class="bg-teal-600 hover:bg-teal-700 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
+                <i class="fab fa-twitter text-white"></i>
+              </a>
+              <a href="#" class="bg-teal-600 hover:bg-teal-700 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
+                <i class="fab fa-youtube text-white"></i>
+              </a>
+              <a href="#" class="bg-teal-600 hover:bg-teal-700 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
+                <i class="fab fa-linkedin-in text-white"></i>
+              </a>
+              <a href="#" class="bg-teal-600 hover:bg-teal-700 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
+                <i class="fab fa-pinterest-p text-white"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
         <div>
-          <h4 class="font-semibold text-white">Roger Scott</h4>
-          <p class="text-white/80 text-sm">Marketing Manager</p>
-        </div>
-      </div>
-
-      <!-- Dots -->
-      <div class="flex space-x-2 mt-6 justify-center md:justify-start">
-        <span class="w-2.5 h-2.5 bg-white/60 rounded-full"></span>
-        <span class="w-2.5 h-2.5 bg-white/30 rounded-full"></span>
-        <span class="w-2.5 h-2.5 bg-white/30 rounded-full"></span>
-      </div>
-    </div>
-
-    <!-- 📣 Info / Heading -->
-    <div class="text-center md:text-left">
-      <span class="text-[#829c8e] italic text-sm">Testimonial</span>
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mt-2 mb-4">
-        WHAT THEY ARE SAYING
-      </h2>
-      <p class="text-gray-600 mb-8">
-        A small river named Duden flows by their place and supplies it with the necessary regelialia.
-        It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-      </p>
-
-      <div class="grid grid-cols-2 gap-6 md:gap-8">
-        <div class="flex items-center space-x-3">
-          <div class="bg-[#dce4df] p-3 rounded-full">
-            <i class="bi bi-person-heart text-[#829c8e] text-2xl"></i>
-          </div>
-          <p class="font-semibold text-gray-800 text-sm md:text-base">We’re Helping Senior People</p>
+          <h4 class="text-xl font-semibold mb-6 text-teal-400">Quick Links</h4>
+          <ul class="space-y-3">
+            <li><a href="#hero" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Home</a></li>
+            <li><a href="#about" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">About Us</a></li>
+            <li><a href="#benefits" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Benefits</a></li>
+            <li><a href="#classes" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Classes</a></li>
+            <li><a href="#testimonials" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Testimonials</a></li>
+            <li><a href="#gallery" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Gallery</a></li>
+            <li><a href="#contact" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Contact</a></li>
+          </ul>
         </div>
 
-        <div class="flex items-center space-x-3">
-          <div class="bg-[#dce4df] p-3 rounded-full">
-            <i class="bi bi-heart-pulse text-[#829c8e] text-2xl"></i>
-          </div>
-          <p class="font-semibold text-gray-800 text-sm md:text-base">Have A Strong Body Life</p>
+        <!-- Classes & Services -->
+        <div>
+          <h4 class="text-xl font-semibold mb-6 text-teal-400">Our Classes</h4>
+          <ul class="space-y-3">
+            <li><a href="#classes" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Hatha Yoga</a></li>
+            <li><a href="#classes" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Meditation</a></li>
+            <li><a href="#classes" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Pranayama</a></li>
+            <li><a href="#classes" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Mindfulness</a></li>
+            <li><a href="#classes" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Private Sessions</a></li>
+            <li><a href="#classes" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Yoga Retreats</a></li>
+            <li><a href="#classes" class="text-gray-300 hover:text-teal-400 transition-colors duration-300">Online Classes</a></li>
+          </ul>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- ✅ YOGA SCHEDULE SECTION -->
-<section id="yoga-schedule" class="py-20 bg-white text-center">
-  <div class="container mx-auto px-4">
-    <p class="text-green-500 text-lg italic mb-2 fade-in">Yoga Schedule</p>
-    <h2 class="text-4xl font-bold text-gray-800 mb-12 fade-in">YOGABEST SCHEDULE</h2>
 
-    <!-- Schedule Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 fade-in-slow">
-      <!-- Example Day Card -->
-      <div class="schedule-day group p-6 rounded-2xl bg-white shadow-md border border-transparent bg-clip-padding relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <!-- Gradient border effect -->
-        <div class="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-br from-green-300 via-lime-400 to-green-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-
-        <h3 class="font-semibold text-lg text-gray-800 mb-4">Monday</h3>
-        <div class="flex justify-center mb-4">
-          <img src="https://images.pexels.com/photos/2035066/pexels-photo-2035066.jpeg" 
-               alt="Yoga Training" 
-               class="w-28 h-28 object-cover rounded-full border-4 border-white shadow-md group-hover:scale-110 transition-transform duration-300">
-        </div>
-        <h4 class="font-semibold text-gray-700">Yoga Training</h4>
-        <p class="text-green-600 mt-2">7 AM - 8 AM</p>
-        <div class="extra-info opacity-0 group-hover:opacity-100 transition-opacity mt-3 text-sm text-gray-600">
-          <p>Focus: Flexibility & Calm Mind</p>
-          <p>Instructor: Maya</p>
-        </div>
-      </div>
-
-      <!-- Repeat for Each Day -->
-      <div class="schedule-day group p-6 rounded-2xl bg-white shadow-md border border-transparent bg-clip-padding relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <div class="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-br from-green-300 via-lime-400 to-green-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-        <h3 class="font-semibold text-lg text-gray-800 mb-4">Tuesday</h3>
-        <div class="flex justify-center mb-4">
-          <img src="https://images.pexels.com/photos/3094215/pexels-photo-3094215.jpeg" 
-               alt="Yoga Class"
-               class="w-28 h-28 object-cover rounded-full border-4 border-white shadow-md group-hover:scale-110 transition-transform duration-300">
-        </div>
-        <h4 class="font-semibold text-gray-700">Yoga Training</h4>
-        <p class="text-green-600 mt-2">6 AM - 7 AM</p>
-        <div class="extra-info opacity-0 group-hover:opacity-100 transition-opacity mt-3 text-sm text-gray-600">
-          <p>Focus: Strength & Balance</p>
-          <p>Instructor: Arjun</p>
-        </div>
-      </div>
-
-      <!-- Add Wednesday -->
-      <div class="schedule-day group p-6 rounded-2xl bg-white shadow-md border border-transparent bg-clip-padding relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <div class="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-br from-green-300 via-lime-400 to-green-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-        <h3 class="font-semibold text-lg text-gray-800 mb-4">Wednesday</h3>
-        <div class="flex justify-center mb-4">
-          <img src="https://images.pexels.com/photos/3772502/pexels-photo-3772502.jpeg" 
-               alt="Meditation Class"
-               class="w-28 h-28 object-cover rounded-full border-4 border-white shadow-md group-hover:scale-110 transition-transform duration-300">
-        </div>
-        <h4 class="font-semibold text-gray-700">Yoga Training</h4>
-        <p class="text-green-600 mt-2">7 AM - 8 AM</p>
-        <div class="extra-info opacity-0 group-hover:opacity-100 transition-opacity mt-3 text-sm text-gray-600">
-          <p>Focus: Breathing & Relaxation</p>
-          <p>Instructor: Riya</p>
-        </div>
-      </div>
-
-      <!-- Add remaining days with same structure -->
-      <!-- Thursday -->
-      <div class="schedule-day group p-6 rounded-2xl bg-white shadow-md border border-transparent bg-clip-padding relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <div class="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-br from-green-300 via-lime-400 to-green-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-        <h3 class="font-semibold text-lg text-gray-800 mb-4">Thursday</h3>
-        <div class="flex justify-center mb-4">
-          <img src="https://images.pexels.com/photos/91631/pexels-photo-91631.jpeg" 
-               alt="Ashtanga Yoga"
-               class="w-28 h-28 object-cover rounded-full border-4 border-white shadow-md group-hover:scale-110 transition-transform duration-300">
-        </div>
-        <h4 class="font-semibold text-gray-700">Yoga Training</h4>
-        <p class="text-green-600 mt-2">6 AM - 7 AM</p>
-        <div class="extra-info opacity-0 group-hover:opacity-100 transition-opacity mt-3 text-sm text-gray-600">
-          <p>Focus: Energy Flow</p>
-          <p>Instructor: Kabir</p>
-        </div>
-      </div>
-
-      <!-- Friday -->
-      <div class="schedule-day group p-6 rounded-2xl bg-white shadow-md border border-transparent bg-clip-padding relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <div class="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-br from-green-300 via-lime-400 to-green-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-        <h3 class="font-semibold text-lg text-gray-800 mb-4">Friday</h3>
-        <div class="flex justify-center mb-4">
-          <img src="https://images.pexels.com/photos/4057526/pexels-photo-4057526.jpeg" 
-               alt="Ashtanga Yoga"
-               class="w-28 h-28 object-cover rounded-full border-4 border-white shadow-md group-hover:scale-110 transition-transform duration-300">
-        </div>
-        <h4 class="font-semibold text-gray-700">Yoga Training</h4>
-        <p class="text-green-600 mt-2">7 AM - 8 AM</p>
-        <div class="extra-info opacity-0 group-hover:opacity-100 transition-opacity mt-3 text-sm text-gray-600">
-          <p>Focus: Energy Flow</p>
-          <p>Instructor: Kabir</p>
-        </div>
-      </div>
-
-      <!-- Saturday -->
-      <div class="schedule-day group p-6 rounded-2xl bg-white shadow-md border border-transparent bg-clip-padding relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <div class="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-br from-green-300 via-lime-400 to-green-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-        <h3 class="font-semibold text-lg text-gray-800 mb-4">Saturday</h3>
-        <div class="flex justify-center mb-4">
-          <img src="https://images.pexels.com/photos/4051518/pexels-photo-4051518.jpeg" 
-               alt="Ashtanga Yoga"
-               class="w-28 h-28 object-cover rounded-full border-4 border-white shadow-md group-hover:scale-110 transition-transform duration-300">
-        </div>
-        <h4 class="font-semibold text-gray-700">Yoga Training</h4>
-        <p class="text-green-600 mt-2">8 AM - 9 AM</p>
-        <div class="extra-info opacity-0 group-hover:opacity-100 transition-opacity mt-3 text-sm text-gray-600">
-          <p>Focus: Energy Flow</p>
-          <p>Instructor: Kabir</p>
-        </div>
-      </div>
-
-      <!-- Sunday -->
-      <div class="schedule-day group p-6 rounded-2xl bg-white shadow-md border border-transparent bg-clip-padding relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <div class="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-br from-green-300 via-lime-400 to-green-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-        <h3 class="font-semibold text-lg text-gray-800 mb-4">Sunday</h3>
-        <div class="flex justify-center mb-4">
-          <img src="https://images.pexels.com/photos/3822624/pexels-photo-3822624.jpeg" 
-               alt="Ashtanga Yoga"
-               class="w-28 h-28 object-cover rounded-full border-4 border-white shadow-md group-hover:scale-110 transition-transform duration-300">
-        </div>
-        <h4 class="font-semibold text-gray-700">Yoga Training</h4>
-        <p class="text-green-600 mt-2">7 AM - 8 AM</p>
-        <div class="extra-info opacity-0 group-hover:opacity-100 transition-opacity mt-3 text-sm text-gray-600">
-          <p>Focus: Energy Flow</p>
-          <p>Instructor: Kabir</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- 🌿 Recent Posts / Image Section -->
-<section class="py-16 bg-[#f9f8f6]" id="recent-posts">
-  <div class="container mx-auto px-6 text-center">
-    <h2 class="text-4xl font-semibold text-gray-800 mb-10">RECENT POST</h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Post 1 -->
-      <div class="bg-white shadow-md rounded-2xl overflow-hidden group transition-transform duration-300 hover:-translate-y-2">
-        <img src="https://images.pexels.com/photos/4051574/pexels-photo-4051574.jpeg" alt="Yoga Post 1"
-             class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300">
-        <div class="relative -mt-6 flex justify-center">
-          <div class="bg-green-500 text-white text-sm py-1.5 px-4 rounded-md shadow">
-            <i class="bi bi-calendar3 me-2"></i> OCT 10, 2020
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 class="text-xl font-semibold mb-3 text-gray-800">Treat Your Body Like A Temple</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">
-            Far far away, behind the word mountains, far from the countries Vokalia and Consonantia...
-          </p>
-        </div>
-      </div>
-
-      <!-- Post 2 -->
-      <div class="bg-white shadow-md rounded-2xl overflow-hidden group transition-transform duration-300 hover:-translate-y-2">
-        <img src="https://images.pexels.com/photos/3822356/pexels-photo-3822356.jpeg" alt="Yoga Post 2"
-             class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300">
-        <div class="relative -mt-6 flex justify-center">
-          <div class="bg-green-500 text-white text-sm py-1.5 px-4 rounded-md shadow">
-            <i class="bi bi-calendar3 me-2"></i> OCT 10, 2020
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 class="text-xl font-semibold mb-3 text-gray-800">Treat Your Body Like A Temple</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">
-            Far far away, behind the word mountains, far from the countries Vokalia and Consonantia...
-          </p>
-        </div>
-      </div>
-
-      <!-- Post 3 -->
-      <div class="bg-white shadow-md rounded-2xl overflow-hidden group transition-transform duration-300 hover:-translate-y-2">
-        <img src="https://images.pexels.com/photos/3822534/pexels-photo-3822534.jpeg" alt="Yoga Post 3"
-             class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300">
-        <div class="relative -mt-6 flex justify-center">
-          <div class="bg-green-500 text-white text-sm py-1.5 px-4 rounded-md shadow">
-            <i class="bi bi-calendar3 me-2"></i> OCT 10, 2020
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 class="text-xl font-semibold mb-3 text-gray-800">Treat Your Body Like A Temple</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">
-            Far far away, behind the word mountains, far from the countries Vokalia and Consonantia...
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- 🌿 Contact Section -->
-<!-- 🌸 Elegant Minimal Contact Section -->
-<!-- 🍃 Nature Theme Contact Section -->
-<section id="contact" class="relative py-20 bg-gradient-to-br from-[#dcefe3] via-[#f5f9f6] to-[#eaf3ed] overflow-hidden">
-  <!-- Decorative background leaves -->
-  <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/white-paper.png')] opacity-40 pointer-events-none"></div>
-  <div class="absolute -top-20 -right-20 opacity-20">
-    <img src="https://cdn-icons-png.flaticon.com/512/3799/3799815.png" class="w-80 h-80" alt="Lotus decorative">
-  </div>
-
-  <div class="relative container mx-auto px-6 lg:px-16">
-    <!-- Heading -->
-    <div class="text-center mb-14">
-      <h2 class="text-4xl font-bold text-green-700 mb-3 tracking-wide">Connect With Nature, Connect With Us</h2>
-      <div class="w-28 h-1 bg-green-600 mx-auto mb-6 rounded-full"></div>
-      <p class="text-gray-700 max-w-2xl mx-auto leading-relaxed">
-        Find peace and harmony through yoga — reach out for session details, collaborations, or guidance.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <!-- 🌿 Left: Info Card -->
-      <div class="bg-white/90 rounded-3xl shadow-2xl p-10 border border-green-100 hover:shadow-green-200 transition duration-500">
-        <h3 class="text-2xl font-semibold text-green-800 mb-8">Contact Information</h3>
-        <ul class="space-y-6 text-gray-700">
-          <li class="flex items-start">
-            <div class="p-3 bg-green-100 text-green-700 rounded-full me-4">
-              <i class="bi bi-geo-alt-fill text-xl"></i>
+        <!-- Contact Info -->
+        <div>
+          <h4 class="text-xl font-semibold mb-6 text-teal-400">Contact Info</h4>
+          <div class="space-y-4">
+            <div class="flex items-start space-x-3">
+              <i class="fa-solid fa-map-marker-alt text-teal-400 mt-1"></i>
+              <div>
+                <p class="text-gray-300">123 Serenity Lane</p>
+                <p class="text-gray-300">Peaceful Valley, CA 90210</p>
+              </div>
             </div>
-            <span>123 Yoga Street, Serenity Nagar, Bengaluru – 560001</span>
-          </li>
-          <li class="flex items-start">
-            <div class="p-3 bg-green-100 text-green-700 rounded-full me-4">
-              <i class="bi bi-telephone-fill text-xl"></i>
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-phone text-teal-400"></i>
+              <p class="text-gray-300">+1 (555) 123-4567</p>
             </div>
-            <span><b>+91 98765 43210</b></span>
-          </li>
-          <li class="flex items-start">
-            <div class="p-3 bg-green-100 text-green-700 rounded-full me-4">
-              <i class="bi bi-whatsapp text-xl"></i>
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-envelope text-teal-400"></i>
+              <p class="text-gray-300">info@yogaura.com</p>
             </div>
-            <span><b>+91 91234 56789</b> (WhatsApp)</span>
-          </li>
-          <li class="flex items-start">
-            <div class="p-3 bg-green-100 text-green-700 rounded-full me-4">
-              <i class="bi bi-envelope-fill text-xl"></i>
+            <div class="flex items-start space-x-3">
+              <i class="fa-solid fa-clock text-teal-400 mt-1"></i>
+              <div>
+                <p class="text-gray-300">Mon-Fri: 6:00 AM - 9:00 PM</p>
+                <p class="text-gray-300">Sat-Sun: 7:00 AM - 8:00 PM</p>
+              </div>
             </div>
-            <span>contact@yogastudio.com</span>
-          </li>
-          <li class="flex items-start">
-            <div class="p-3 bg-green-100 text-green-700 rounded-full me-4">
-              <i class="bi bi-clock text-xl"></i>
-            </div>
-            <span>Mon – Sat: 6 AM – 8 PM</span>
-          </li>
-        </ul>
-
-        <!-- Call to Action -->
-        <div class="mt-10 text-center">
-          <a href="tel:+919876543210"
-             class="inline-flex items-center gap-2 bg-green-600 text-white py-3 px-7 rounded-full shadow-lg font-semibold hover:bg-green-700 hover:shadow-green-300 transition duration-300">
-            <i class="bi bi-telephone-outbound"></i> Call Now
-          </a>
-        </div>
-
-        <!-- Socials -->
-        <div class="mt-8 flex justify-center space-x-5">
-          <a href="#" class="p-3 bg-green-100 rounded-full text-green-700 hover:bg-green-600 hover:text-white transition"><i class="bi bi-facebook text-xl"></i></a>
-          <a href="#" class="p-3 bg-green-100 rounded-full text-green-700 hover:bg-green-600 hover:text-white transition"><i class="bi bi-instagram text-xl"></i></a>
-          <a href="#" class="p-3 bg-green-100 rounded-full text-green-700 hover:bg-green-600 hover:text-white transition"><i class="bi bi-twitter-x text-xl"></i></a>
-          <a href="#" class="p-3 bg-green-100 rounded-full text-green-700 hover:bg-green-600 hover:text-white transition"><i class="bi bi-youtube text-xl"></i></a>
+          </div>
         </div>
       </div>
-
-      <!-- 🌼 Right: Contact Form -->
-      <div class="bg-gradient-to-br from-white to-green-50 rounded-3xl shadow-2xl p-10 border border-green-100 hover:shadow-green-200 transition duration-500">
-        <h3 class="text-2xl font-semibold text-green-800 mb-8">Send Us a Message</h3>
-        <form class="space-y-5">
-          <div>
-            <label class="block text-gray-700 mb-2 font-medium">Full Name</label>
-            <input type="text" placeholder="Enter your name"
-                   class="w-full p-3 border border-green-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
-          </div>
-          <div>
-            <label class="block text-gray-700 mb-2 font-medium">Email</label>
-            <input type="email" placeholder="Enter your email"
-                   class="w-full p-3 border border-green-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
-          </div>
-          <div>
-            <label class="block text-gray-700 mb-2 font-medium">Mobile Number</label>
-            <input type="tel" placeholder="+91 XXXXX XXXXX"
-                   class="w-full p-3 border border-green-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
-          </div>
-          <div>
-            <label class="block text-gray-700 mb-2 font-medium">Message</label>
-            <textarea rows="5" placeholder="Type your message..."
-                      class="w-full p-3 border border-green-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"></textarea>
-          </div>
-          <button type="submit"
-                  class="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 hover:shadow-green-300 transition duration-300">
-            Send Message
-          </button>
-        </form>
-      </div>
     </div>
-  </div>
-</section>
 
-<!-- 🌿 Footer Section -->
-<footer class="relative bg-gradient-to-br from-[#829c8e] via-[#6b877b] to-[#4e655a] text-white pt-16 pb-8 overflow-hidden">
-  <!-- Decorative Elements -->
-  <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/white-paper.png')]"></div>
-  
-  <div class="relative container mx-auto px-6 lg:px-16 grid grid-cols-1 md:grid-cols-4 gap-12">
-    
-    <!-- 🧘 About -->
-    <div>
-      <h3 class="text-2xl font-semibold mb-4 flex items-center gap-2">
-        <i class="bi bi-flower1 text-yellow-300"></i> YogAura
-      </h3>
-      <p class="text-gray-100 leading-relaxed text-sm">
-        At YogAura, we believe in aligning body, mind, and spirit through mindful practice and inner peace.
-      </p>
-      <div class="mt-5 flex space-x-4">
-        <a href="#" class="text-white hover:text-yellow-300 transition transform hover:-translate-y-1">
-          <i class="bi bi-facebook text-2xl"></i>
-        </a>
-        <a href="#" class="text-white hover:text-yellow-300 transition transform hover:-translate-y-1">
-          <i class="bi bi-instagram text-2xl"></i>
-        </a>
-        <a href="#" class="text-white hover:text-yellow-300 transition transform hover:-translate-y-1">
-          <i class="bi bi-twitter-x text-2xl"></i>
-        </a>
-        <a href="#" class="text-white hover:text-yellow-300 transition transform hover:-translate-y-1">
-          <i class="bi bi-youtube text-2xl"></i>
-        </a>
+    <!-- Newsletter Signup -->
+    <div class="border-t border-gray-800">
+      <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto text-center">
+          <h3 class="text-2xl font-bold mb-4 text-teal-400">Stay Connected</h3>
+          <p class="text-gray-300 mb-6">Subscribe to our newsletter for yoga tips, class updates, and wellness inspiration.</p>
+          <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input type="email" placeholder="Enter your email" 
+                   class="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+            <button class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+              Subscribe
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- 🔗 Quick Links -->
-    <div>
-      <h4 class="text-xl font-semibold mb-4">Quick Links</h4>
-      <ul class="space-y-2 text-sm">
-        <li><a href="#hero" class="hover:text-yellow-300 transition">Home</a></li>
-        <li><a href="#about" class="hover:text-yellow-300 transition">About Us</a></li>
-        <li><a href="#classes" class="hover:text-yellow-300 transition">Classes</a></li>
-        <li><a href="#instructors" class="hover:text-yellow-300 transition">Instructors</a></li>
-        <li><a href="#contact" class="hover:text-yellow-300 transition">Contact</a></li>
-      </ul>
+    <!-- Bottom Footer -->
+    <div class="border-t border-gray-800">
+      <div class="container mx-auto px-4 py-6">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="text-gray-400 text-sm mb-4 md:mb-0">
+            © 2024 YogAura. All rights reserved. | Designed with ❤️ for your wellness journey.
+          </div>
+          <div class="flex space-x-6 text-sm">
+            <a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300">Privacy Policy</a>
+            <a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300">Terms of Service</a>
+            <a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
     </div>
+  </footer>
 
-    <!-- 🕉️ Useful Info -->
-    <div>
-      <h4 class="text-xl font-semibold mb-4">Useful Info</h4>
-      <ul class="space-y-2 text-sm">
-        <li><a href="#" class="hover:text-yellow-300 transition">Privacy Policy</a></li>
-        <li><a href="#" class="hover:text-yellow-300 transition">Terms & Conditions</a></li>
-        <li><a href="#" class="hover:text-yellow-300 transition">FAQ</a></li>
-        <li><a href="#" class="hover:text-yellow-300 transition">Schedule</a></li>
-        <li><a href="#" class="hover:text-yellow-300 transition">Blog</a></li>
-      </ul>
-    </div>
-
-    <!-- 📞 Contact -->
-    <div>
-      <h4 class="text-xl font-semibold mb-4">Get In Touch</h4>
-      <ul class="space-y-3 text-sm">
-        <li class="flex items-center gap-3">
-          <i class="bi bi-geo-alt text-yellow-300 text-lg"></i>
-          <span>123 Serenity Street, Bliss City</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <i class="bi bi-telephone text-yellow-300 text-lg"></i>
-          <span>+91 98765 43210</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <i class="bi bi-envelope text-yellow-300 text-lg"></i>
-          <span>info@yogaura.com</span>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-
-  <!-- Divider Line -->
-  <div class="relative mt-12 border-t border-white/20"></div>
-
-  <!-- Copyright -->
-  <div class="relative text-center mt-6 text-sm text-gray-200">
-    <p>© 2025 YogAura | Designed & Developed by <span class="text-yellow-300 font-semibold">PRNA Technologies</span></p>
-  </div>
-</footer>
-
-
-  <!-- JS for mobile menu toggle -->
+  <!-- JS Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
-    const toggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu');
-
-    toggle.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
+    AOS.init({ duration: 1000, once: true });
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+      document.getElementById('menu').classList.toggle('hidden');
     });
-
-  const elements = document.querySelectorAll('.fade-in, .fade-in-slow');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.animationPlayState = 'running';
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-  elements.forEach(el => observer.observe(el));
-   document.getElementById("year").textContent = new Date().getFullYear();
   </script>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
